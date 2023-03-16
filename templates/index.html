@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <title>SOUSA-Ler</title>
+    <style>
+      body {
+        background: linear-gradient(to bottom right, #000000, #FF0000);
+        color: #FFFFFF;
+      }
+      h1 {
+        border-bottom: 1px solid #FFFFFF;
+      }
+      #finger-count {
+        font-size: 2em;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>SOUSA-Ler</h1>
+    <img src="{{ url_for('video_feed') }}" width="50%">
+    <!-- jinja2のテンプレートの書き方です。/video_feedを呼び出しています。 -->
+    <p>Number of fingers: <span id="finger-count"></span></p>
+
+    <script>
+      var source = new EventSource("/finger_count");
+      source.onmessage = function(event) {
+        var finger_count = event.data;
+        document.getElementById("finger-count").innerHTML = finger_count;
+      };
+    </script>
+  </body>
+</html>
